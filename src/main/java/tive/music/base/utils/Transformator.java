@@ -2,25 +2,23 @@ package tive.music.base.utils;
 
 import java.util.ArrayList;
 
-import tive.music.base.ELinePosition;
-import tive.music.base.CNote;
-import tive.music.base.CPitch;
-import tive.music.base.CTimeMeasure;
-import tive.music.base.EOctavePitch;
-import tive.music.base.ESignClef;
-import tive.music.base.EStepPitch;
-import tive.music.base.ETypeNote;
+import tive.music.base.constant.ELinePosition;
+import tive.music.base.models.CNote;
+import tive.music.base.models.CPitch;
+import tive.music.base.models.CTimeMeasure;
+import tive.music.base.constant.EOctavePitch;
+import tive.music.base.constant.EClef;
+import tive.music.base.constant.EPitch;
+import tive.music.base.constant.EDuration;
 
 /**
- *
- * @author tive
- * @version 1.0
+ * @author Alvaro Orellana
  */
 public class Transformator {
 
     private final static int SIZE_OCTAVE = 7;
 
-    private static ELinePosition Transform(EStepPitch step, EOctavePitch octave, ESignClef clef) {
+    private static ELinePosition Transform(EPitch step, EOctavePitch octave, EClef clef) {
         int diffStep = (clef.getStepPitch()).getValue() - step.getValue();
         int diffOctave = (clef.getOctavePitch()).getValue() - octave.getValue();
 
@@ -36,15 +34,16 @@ public class Transformator {
         return values[pos];
     }
 
-    public static ELinePosition Transform(CPitch step, ESignClef clef) {
-        return Transform(step.getStep(), step.getOctave(), clef);
+    public static ELinePosition Transform(CPitch step, EClef clef) {
+        return Transform(step.getPitch(), step.getOctave(), clef);
     }
 
-    public static CPitch Transform(ELinePosition line, ESignClef clef) {
+    public static CPitch Transform(ELinePosition line, EClef clef) {
         int difflines = line.getValue() - clef.getPosition().getValue();
         int diffTo = clef.getStepPitch().getValue() - difflines;
         int diffOctave = clef.getOctavePitch().getValue();
-        //FALTATIV AQUI ME QUEDE EL SI # EN CLAVE DE FA NO SE DIBUJA BIEN VER POR QUE
+        //TODO: IF SI # IN FA CLEF IS NOT DRAWING GOOD, CHECK WHY?
+
 
         int sign = 1;
 
@@ -53,29 +52,20 @@ public class Transformator {
         }
 
         while (diffTo > SIZE_OCTAVE || diffTo < 0) {
-
             diffTo = diffTo + sign * SIZE_OCTAVE;
             diffOctave = diffOctave + sign * -1;
         }
-        return new CPitch(EStepPitch.toEstepPitch(diffTo), (EOctavePitch.toOctavePitch(diffOctave)));
+        return new CPitch(EPitch.toEStepPitch(diffTo), (EOctavePitch.toOctavePitch(diffOctave)));
     }
 
-    public static int getYNote(CNote note, ESignClef clef) {
-        if (note.getIsSilence()) {
-            return note.getType().getYString();
-        }
-        ELinePosition pos = Transformator.Transform(note.getPitch(), clef);
-        return pos.getValue() * 10;
-    }
-
-    public static ArrayList<CNote> toMaxSilence(ESignClef clef, double currentValue, CTimeMeasure time) {
+    public static ArrayList<CNote> toMaxSilence(EClef clef, double currentValue, CTimeMeasure time) {
 
         ArrayList<CNote> notes = new ArrayList<CNote>();
 
         double maxSpace = time.getBeats() * (1.0 / time.getBeatType().getValue());
         double currentSpace = currentValue / (time.getBeatType().getValue());
 
-        ETypeNote[] types = ETypeNote.values();
+        EDuration[] types = EDuration.values();
 
         int i = 0;
         while (i < types.length) {

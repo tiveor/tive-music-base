@@ -1,12 +1,9 @@
-package tive.music.base;
+package tive.music.base.constant;
 
 /**
- *
- * @author tive
- * @version 1.0
+ * @author Alvaro Orellana
  */
 public enum ELinePosition {
-    //SIX ADDITIONAL UP AND DOWN FOR WHATEVER SIGN CLEF
 
     FIFTH_SPACE_UP(0, 5),
     FIFTH_ADITIONAL_UP(1, 5),
@@ -40,31 +37,24 @@ public enum ELinePosition {
     FIFTH_ADITIONAL_DOWN(29, -5),
     FIFTH_SPACE_DOWN(30, -5),
     SIX_ADITIONAL_DOWN(31, -6);
-    private final int mValue;
-    private final int mNumberAditionalLines;
 
-    ELinePosition(int value, int numberAditionalLines) {
-        mValue = value;
-        mNumberAditionalLines = numberAditionalLines;
+    private final int value;
+    private final int aditionalLines;
+
+    ELinePosition(int value, int aditionalLines) {
+        this.value = value;
+        this.aditionalLines = aditionalLines;
     }
 
     public int getValue() {
-        return mValue;
+        return value;
     }
 
-    public int getNumberAditionalLines() {
-        return mNumberAditionalLines;
+    public int getAditionalLines() {
+        return aditionalLines;
     }
 
     public boolean isAditional() {
-        return mValue < 10 || mValue > 20 ? true : false;
+        return value < 10 || value > 20;
     }
-    /* public boolean isSpace()
-    {
-    return mValue % 2 == 0;
-    }*/
-    /*public static ELinePosition getValue(int X)
-    {
-
-    }*/
 }

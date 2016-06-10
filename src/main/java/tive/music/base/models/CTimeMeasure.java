@@ -1,22 +1,27 @@
-package tive.music.base;
+package tive.music.base.models;
 
 import java.io.Serializable;
 
+import tive.music.base.constant.EDuration;
+
+/**
+ * @author Alvaro Orellana
+ */
 public class CTimeMeasure implements Serializable {
 
     private int mBeats;
-    private ETypeNote mBeatType;
+    private EDuration mBeatType;
 
-    public CTimeMeasure(int beats, ETypeNote beatType) {
+    public CTimeMeasure(int beats, EDuration duration) {
         mBeats = beats;
-        mBeatType = beatType;
+        mBeatType = duration;
     }
 
-    public ETypeNote getBeatType() {
+    public EDuration getBeatType() {
         return mBeatType;
     }
 
-    public void setBeatType(ETypeNote beatType) {
+    public void setBeatType(EDuration beatType) {
         this.mBeatType = beatType;
     }
 
@@ -38,5 +43,14 @@ public class CTimeMeasure implements Serializable {
 
     public String getTMN() {
         return mBeats + "." + mBeatType.getValue();
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("CTimeMeasure{");
+        sb.append("mBeats=").append(mBeats);
+        sb.append(", mBeatType=").append(mBeatType);
+        sb.append('}');
+        return sb.toString();
     }
 }

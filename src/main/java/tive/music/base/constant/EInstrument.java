@@ -1,9 +1,7 @@
-package tive.music.base;
+package tive.music.base.constant;
 
 /**
- *
- * @author tive
- * @version 1.0
+ * @author Alvaro Orellana
  */
 public enum EInstrument {
 
@@ -134,29 +132,30 @@ public enum EInstrument {
     HELICOPTER(EGroupInstrument.GRP_SOUND_EFFECTS, "Helicopter", 126),
     APPLAUSE(EGroupInstrument.GRP_SOUND_EFFECTS, "Applause", 127),
     Gunshot(EGroupInstrument.GRP_SOUND_EFFECTS, "Gunshot", 128);
-    private final EGroupInstrument mGroup;
-    private final String mName;
-    private final int mMidiValue;
+
+    private final EGroupInstrument group;
+    private final String name;
+    private final int midiValue;
 
     EInstrument(EGroupInstrument group, String name, int midiValue) {
-        mGroup = group;
-        mName = name;
-        mMidiValue = midiValue;
+        this.group = group;
+        this.name = name;
+        this.midiValue = midiValue;
     }
 
     public EGroupInstrument getGroup() {
-        return mGroup;
+        return group;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public int getMidiValue() {
-        return mMidiValue;
+        return midiValue;
     }
 
-    public static EInstrument getValue(int midiValue) {
+    public static EInstrument getInstrument(int midiValue) {
 
         for (EInstrument ins : values()) {
             if (ins.getMidiValue() == midiValue) {
@@ -168,6 +167,6 @@ public enum EInstrument {
 
     @Override
     public String toString() {
-        return mName;
+        return name;
     }
 }

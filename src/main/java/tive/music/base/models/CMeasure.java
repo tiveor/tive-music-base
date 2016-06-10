@@ -1,14 +1,20 @@
-package tive.music.base;
+package tive.music.base.models;
 
 import java.util.ArrayList;
 import java.io.Serializable;
+
+import tive.music.base.INote;
+import tive.music.base.constant.EKeyMeasure;
 import tive.music.base.utils.Transformator;
 
+/**
+ * @author Alvaro Orellana (TODO: still refactoring)
+ */
 public class CMeasure implements Serializable {
 
     private ArrayList<INote> mNotes;
     private ArrayList<CNote> mNotesAutoCompleted;
-    private double mTempo;//<sound tempo =''>
+    private double tempo;//<sound tempo =''>
     private double mCurrentValue;
     private CMeasureAttributes mAttributes;
     private int mMinValueDuration;
@@ -19,7 +25,7 @@ public class CMeasure implements Serializable {
         mCurrentValue = 0.0;//start clean
         mAttributes = new CMeasureAttributes(time, key, clef);
         mMinValueDuration = Integer.MIN_VALUE;
-        mTempo = 120.0;
+        tempo = 120.0;
     }
 
     public CMeasure(CMeasure measure) {
@@ -72,9 +78,9 @@ public class CMeasure implements Serializable {
         double num = mAttributes.getTime().getBeatType().getValue();
         double den = (double) (note.getType().getValue());
 
-        if (note.getHasDot()) {
+        if (note.isHasDot()) {
             return (num / den) * 1.5;
-        } else if (note.getIsTresillo()) {
+        } else if (note.isTriplet()) {
             return (num / den) * (2.0 / 3.0);
         } else {
             return (num / den);
@@ -104,7 +110,7 @@ public class CMeasure implements Serializable {
             mNotes.add(note);
             mCurrentValue = sum;
 
-            int value = note.getType().getValue();//FALTATIV VERIFICAR AL SACAR LA NOTA
+            int value = note.getType().getValue();//TODO: VERIFY WHEN GIVE NOTE
             if (value > mMinValueDuration) {
                 mMinValueDuration = value;
             }
@@ -136,13 +142,13 @@ public class CMeasure implements Serializable {
         boolean result = false;
 
         CNote first = chord.getNotes().get(0);
-        double sum = hasSpaceForThisNote(first);// le mandamos solo la primera para que cosito
+        double sum = hasSpaceForThisNote(first);// TODO: SENDING JUST FIRST
 
         if (sum > 0) {
             mNotes.add(chord);
             mCurrentValue = sum;
 
-            int value = first.getType().getValue();//FALTATIV VERIFICAR AL SACAR LA NOTA
+            int value = first.getType().getValue();//TODO: VERIFY WHEN GIVE NOTE
             if (value > mMinValueDuration) {
                 mMinValueDuration = value;
             }
@@ -196,16 +202,16 @@ public class CMeasure implements Serializable {
     }
 
     public double getTempo() {
-        return mTempo;
+        return tempo;
     }
 
     public void setTempo(double Tempo) {
-        mTempo = Tempo;
+        tempo = Tempo;
     }
 
     public double getCurrentValue() {
         return mCurrentValue - normalizeAutoCompleted();
-        //FALTATIV muy lento por normalize por todas las notas autocompletadas
+        //TODO: TOO SLOW NORMALIZE ALL NOTES AUTOCOMPLETED
     }
 
     public double getDurationNormalized() {
@@ -218,8 +224,6 @@ public class CMeasure implements Serializable {
 
     public EKeyMeasure getKey() {
         return mAttributes.getKey();
-
-
     }
 
     public void setKey(EKeyMeasure key) {
@@ -228,8 +232,6 @@ public class CMeasure implements Serializable {
 
     public CClef getClef() {
         return mAttributes.getClef();
-
-
     }
 
     public void setClef(CClef clef) {
@@ -246,13 +248,13 @@ public class CMeasure implements Serializable {
 
     @Override
     public String toString() {
-        String res = "Measure:\n";
+        StringBuilder sb = new StringBuilder();
+        sb.append("Measure:\n");
 
-        for (int i = 0; i < mNotes.size(); i++) {
-            res += mNotes.get(i).toString() + "\n";
-        }
-        return res;
+        for (int i = 0; i < mNotes.size(); i++)
+            sb.append(mNotes.get(i).toString() + "\n");
 
+        return sb.toString();
     }
 
     public int getMinValueDuration() {

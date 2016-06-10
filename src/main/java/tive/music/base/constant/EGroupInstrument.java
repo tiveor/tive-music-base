@@ -1,9 +1,7 @@
-package tive.music.base;
+package tive.music.base.constant;
 
 /**
- *
- * @author tive
- * @version 1.0
+ * @author Alvaro Orellana
  */
 public enum EGroupInstrument {
 
@@ -24,24 +22,24 @@ public enum EGroupInstrument {
     GRP_PERCUSSIVE(15, "Percussive"),
     GRP_SOUND_EFFECTS(16, "Sound Effects");
 
-    private final int mID;
-    private final String mName;
+    private final int id;
+    private final String name;
 
     EGroupInstrument(int id, String name){
-        mID = id;
-        mName = name;
+        this.id = id;
+        this.name = name;
     }
 
     public int getID(){
-        return mID;
+        return id;
     }
 
     public String getName(){
-        return mName;
+        return name;
     }
 
     @Override
     public String toString(){
-        return mName;
+        return name;
     }
 }

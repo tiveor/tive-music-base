@@ -1,15 +1,19 @@
-package tive.music.base;
+package tive.music.base.models;
+
 import java.io.Serializable;
 
-public class CMeasureAttributes implements Serializable
-{
+import tive.music.base.constant.EKeyMeasure;
+
+/**
+ * @author Alvaro Orellana
+ */
+public class CMeasureAttributes implements Serializable {
     private int mDivisions;//<divisions> value </divisions>?
     private EKeyMeasure mKey;
     private CTimeMeasure mTime;
     private CClef mClef;
-    
-    public CMeasureAttributes(CTimeMeasure time, EKeyMeasure key, CClef clef)//default contructor
-    {
+
+    public CMeasureAttributes(CTimeMeasure time, EKeyMeasure key, CClef clef) {
         mTime = time;
         mKey = key;
         mClef = clef;
@@ -42,8 +46,18 @@ public class CMeasureAttributes implements Serializable
     public CTimeMeasure getTime() {
         return mTime;
     }
+
     public void setTime(CTimeMeasure time) {
         mTime = time;
     }
 
+    @Override
+    public String toString() {
+        return "CMeasureAttributes{" +
+                "mDivisions=" + mDivisions +
+                ", mKey=" + mKey +
+                ", mTime=" + mTime +
+                ", mClef=" + mClef +
+                '}';
+    }
 }

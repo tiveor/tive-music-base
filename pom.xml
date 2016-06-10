@@ -4,7 +4,7 @@
     <groupId>tive.music.base</groupId>
     <artifactId>TiveMusicBase</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>0.1</version>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

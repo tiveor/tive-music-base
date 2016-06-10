@@ -1,8 +1,7 @@
 package tive.music.base;
 
 /**
- *
- * @author tive
+ * @author Alvaro Orellana (TODO: still refactoring)
  */
 public interface INote {
 

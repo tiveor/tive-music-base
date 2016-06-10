@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package tive.music.base;
+package tive.music.base.constant;
 
 /**
- *
- * @author Administrador
+ * @author Alvaro Orellana
  */
 public enum EOctavePitch {
 
@@ -21,14 +16,14 @@ public enum EOctavePitch {
     EIGHT(8),
     NINE(9),
     TEN(10);
-    private final int mValue;
+    private final int value;
 
     EOctavePitch(int value) {
-        mValue = value;
+        this.value = value;
     }
 
     public int getValue() {
-        return mValue;
+        return value;
     }
 
     public static EOctavePitch toOctavePitch(int value) {
@@ -60,40 +55,21 @@ public enum EOctavePitch {
         }
     }
 
-    public EOctavePitch Next() {
-        boolean next = false;
-        for (EOctavePitch typeNote : values())//mas lento pero mas facil de hacer faltativ
-        {
-            if (next) {
-                return typeNote;
-            }
+    public EOctavePitch next() {
+        if (this == EOctavePitch.TEN)
+            return EOctavePitch.TEN;
 
-            if (typeNote == this) {
-                next = true;
-            }
-        }
-
-        return this;
-
+        EOctavePitch[] octavePitches = values();
+        return octavePitches[(this.ordinal() + 1) % octavePitches.length];
     }
 
-    public EOctavePitch Previous() {
+    public EOctavePitch prev() {
 
-        boolean next = false;
-        EOctavePitch[] types = values();
+        if (this == EOctavePitch.ZERO)
+            return EOctavePitch.ZERO;
 
-        for (int i = types.length - 1; i >= 0; i--)//mas lento pero mas facil de hacer faltativ
-        {
-            if (next) {
-                return types[i];
-            }
-
-            if (types[i] == this) {
-                next = true;
-            }
-        }
-
-        return this;
+        EOctavePitch[] octavePitches = values();
+        return octavePitches[(this.ordinal() - 1) % octavePitches.length];
     }
 }
     
